@@ -258,7 +258,8 @@ class BigQuery(Database):
     def select_table_schema(self, path: DbPath) -> str:
         project, schema, name = self._normalize_table_path(path)
         return (
-            "SELECT lower(column_name) as column_name, data_type, 6 as datetime_precision, 38 as numeric_precision, 9 as numeric_scale "
+            "SELECT lower(column_name) as column_name, data_type, 6 as datetime_precision, 10 as numeric_precision, 9 as numeric_scale "
+            # "SELECT column_name, data_type, 6 as datetime_precision, 38 as numeric_precision, 9 as numeric_scale "
             f"FROM `{project}`.`{schema}`.INFORMATION_SCHEMA.COLUMNS "
             f"WHERE table_name = '{name}' AND table_schema = '{schema}'"
         )

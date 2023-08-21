@@ -319,8 +319,8 @@ class JoinDiffer(TableDiffer):
         if len(cols1) != len(cols2):
             raise ValueError("The provided columns are of a different count")
 
-        a = table1.make_select()
-        b = table2.make_select()
+        a = table1.make_select().select(**{f"{c}": NormalizeAsString(this[c]) for c in cols1})
+        b = table2.make_select().select(**{f"{c}": NormalizeAsString(this[c]) for c in cols2})
 
         is_diff_cols = {f"is_diff_{c1}": bool_to_int(a[c1].is_distinct_from(b[c2])) for c1, c2 in safezip(cols1, cols2)}
 
